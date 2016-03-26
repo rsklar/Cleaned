@@ -26,6 +26,9 @@ countsdf<-as.data.frame(git_counts)
 # definition of function
 costofpract<-function(result,practice){
   emptypract<-subset(result,result$emptypract==practice)
+
+  if (nrow(emptypract) == 0) { return(NA) }
+
   cost<-emptypract$cost_empty[!emptypract$cost_empty==99]
   meancost<-mean(cost,na.rm=TRUE)
   return(meancost)
@@ -88,6 +91,9 @@ gitmeancost_labs<-c("gitmeancost1",
                     "gitmeancost16",
                     "gitmeancost17",
                     "gitmeancost18")
+
+gitmeancost_labs<-gitmeancost_labs[!is.na(gitmeancost_vect)]
+gitmeancost_vect<-gitmeancost_vect[!is.na(gitmeancost_vect)]
 
 as.data.frame(cbind(gitmeancost_labs,gitmeancost_vect))
 
