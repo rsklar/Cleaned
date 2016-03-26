@@ -25,8 +25,14 @@ countsdf<-as.data.frame(git_counts)
 
 # definition of function
 costofpract<-function(result,practice){
-  emptypract<-subset(result,result$emptypract==practice)
-  cost<-emptypract$cost_empty[!emptypract$cost_empty==99]
+  pract<-subset(result,result$emptypract==practice)
+  rowemptypract<-nrow(pract)
+  
+  if(rowemptypract==0){
+    return(NA)
+  }
+    
+  cost<-pract$cost_empty[!pract$cost_empty==99]
   meancost<-mean(cost,na.rm=TRUE)
   return(meancost)
 }
@@ -89,12 +95,22 @@ gitmeancost_labs<-c("gitmeancost1",
                     "gitmeancost17",
                     "gitmeancost18")
 
-as.data.frame(cbind(gitmeancost_labs,gitmeancost_vect))
+X<-as.data.frame(cbind(gitmeancost_labs,gitmeancost_vect))
+#d<-X[!(X$gitmeancost_vect=="NaN"),]
 
+emptypract$cost_empty[!emptypract$cost_empty==99]
 
-gitmeancost_vect[!gitmeancost_vect=="NaN"]
-barplot(gitmeancost_vect,xlab="Emptying Practice",ylab="Price RWF")
+barplot(gitmeancost_vect)
 
+#what does na.rm in line 30 remove? 
+#how are averages being generated? ? ? is deniminator total respondent count from that category or only people that reported a price? 
+#average denominator should be only people that reported a price
 
+#overall problem is i cant figure out how to just graph the practices people do, and reported costs for.
+#why are they returning NaN? I removed NA values
 #when I run the code below,  means are generated for practices that have no records:
 #as.data.frame(cbind(gitmeancost_labs,gitmeancost_vect[!gitmeancost_vect=="NaN"]))
+#tried this too gitmeancost_vect[!gitmeancost_vect=="NaN"]
+
+
+
