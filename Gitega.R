@@ -25,14 +25,14 @@ countsdf<-as.data.frame(git_counts)
 
 # definition of function
 costofpract<-function(result,practice){
-  pract<-subset(result,result$emptypract==practice)
-  rowemptypract<-nrow(pract)
+  emptypract<-subset(result,result$emptypract==practice)
+  rowemptypract<-nrow(subset(gitresult,gitresult$emptypract==2))
   
   if(rowemptypract==0){
     return(NA)
   }
     
-  cost<-pract$cost_empty[!pract$cost_empty==99]
+  cost<-emptypract$cost_empty[!emptypract$cost_empty==99]
   meancost<-mean(cost,na.rm=TRUE)
   return(meancost)
 }
