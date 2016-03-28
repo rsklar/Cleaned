@@ -21,7 +21,8 @@ gik_mean_emptycostUSD<-gik_mean_emptycostRWF*0.0013
 
 #counts of empty practice
   gik_counts<-table(gikresult$emptypract)
-  barplot(gik_counts)
+  barplot(gik_counts, ylab="Number of Respondents (n=126)", xlab="FSM Practice",main="Emptying Practices, Gikondo")
+
  
 #prices of different emptying practices
   #average price of sealing a latrine then building a new one yourself 
@@ -80,7 +81,11 @@ labelmeancosts<-c("1","2","3","5","7","9","10","11","14")
 gik_meancostempty<-c(gikmeancost1,gikmeancost2,gikmeancost3,gikmeancost5,gikmeancost7,gikmeancost9,gikmeancost10,gikmeancost11,gikmeancost14)
 
 gik_meancostempty
-barplot(gik_meancostempty,ylab="Price",names.arg =labelmeancosts)
+barplot(gik_meancostempty,ylab="Price",names.arg =labelmeancosts,xlab="FSM Practice",main = "Mean Price of Emptying Practices, Gikondo")
 
+#residence time versus pit fill frequency
+gik_resyr<-gikresult$hh_residtime/12
+gik_pitfillfreq<-gikresult$pitfillfreq
+gik_resyr_v_pitfill<-cbind(gik_resyr,gik_pitfillfreq)
+plot(resyr_v_pitfill)
 
-#where do the NAs in 14 come from? were they entered or generated? 

@@ -15,8 +15,9 @@ git_mean_emptycostUSD<-git_mean_emptycostRWF*0.0013
 #counts of empty practice
 
   #empty practices not including Dont know/no response
-git_counts<-table(gitresult$emptypract[!gitresult$emptypract==99])
-barplot(git_counts,xlab="Emptying Practices",ylab="Respondent Count")
+#git_counts<-table(gitresult$emptypract[!gitresult$emptypract==99])
+git_counts<-table(gitresult$emptypract)
+barplot(git_counts,xlab="Emptying Practices",ylab="Number of Respondents (n=79)",main="Emptying Practices, Gitega")
 #alternative
 countsdf<-as.data.frame(git_counts)
 
@@ -26,7 +27,7 @@ countsdf<-as.data.frame(git_counts)
 # definition of function
 costofpract<-function(result,practice){
   emptypract<-subset(result,result$emptypract==practice)
-  rowemptypract<-nrow(subset(gitresult,gitresult$emptypract==2))
+  rowemptypract<-nrow(subset(gitresult,gitresult$emptypract==practice))
   
   if(rowemptypract==0){
     return(NA)
@@ -76,41 +77,34 @@ gitmeancost_vect<-c(gitmeancost1,
                     gitmeancost17,
                     gitmeancost18)
 
-gitmeancost_labs<-c("gitmeancost1",
-                    "gitmeancost2",
-                    "gitmeancost3",
-                    "gitmeancost4",
-                    "gitmeancost5",
-                    "gitmeancost6",
-                    "gitmeancost7",
-                    "gitmeancost8",
-                    "gitmeancost9",
-                    "gitmeancost10",
-                    "gitmeancost11",
-                    "gitmeancost12",
-                    "gitmeancost13",
-                    "gitmeancost14", 
-                    "gitmeancost15",
-                    "gitmeancost16",
-                    "gitmeancost17",
-                    "gitmeancost18")
+gitmeancost_labs<-c("1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12",
+                    "13",
+                    "14", 
+                    "15",
+                    "16",
+                    "17",
+                    "18")
+
+gitmeancost_labs<-gitmeancost_labs[!is.na(gitmeancost_vect)]
+gitmeancost_vect<-gitmeancost_vect[!is.na(gitmeancost_vect)]
 
 X<-as.data.frame(cbind(gitmeancost_labs,gitmeancost_vect))
 #d<-X[!(X$gitmeancost_vect=="NaN"),]
 
-emptypract$cost_empty[!emptypract$cost_empty==99]
 
-barplot(gitmeancost_vect)
-
-#what does na.rm in line 30 remove? 
-#how are averages being generated? ? ? is deniminator total respondent count from that category or only people that reported a price? 
-#average denominator should be only people that reported a price
-
-#overall problem is i cant figure out how to just graph the practices people do, and reported costs for.
-#why are they returning NaN? I removed NA values
-#when I run the code below,  means are generated for practices that have no records:
-#as.data.frame(cbind(gitmeancost_labs,gitmeancost_vect[!gitmeancost_vect=="NaN"]))
-#tried this too gitmeancost_vect[!gitmeancost_vect=="NaN"]
+meancost_git<-barplot(gitmeancost_vect,names.arg=gitmeancost_labs,xlab="FSM Practice",main="Mean Price of Emptying Practices, Gitega")
+options(scipen=10)
 
 
 
